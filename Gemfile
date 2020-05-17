@@ -26,8 +26,6 @@ gem 'puma', '~> 3.7'
 # gem 'rack-cors'
 gem 'faraday'
 gem 'jquery'
-gem 'factory_bot_rails'
-gem 'faker'
 gem 'active_model_serializers'
 gem 'rack-cors'
 
@@ -36,6 +34,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'simplecov'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
