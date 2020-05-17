@@ -17,4 +17,20 @@ describe "Items API" do
     expect(items.first).to have_key('unit_price')
     expect(items.first).to have_key('merchant_id')
   end
+
+  it "returns data for a specified item" do
+    merchant = create(:merchant)
+    create_list(:item, 3, merchant_id: merchant.id)
+
+    get "/api/v1/items/#{Item.last.id}"
+
+    expect(response).to be_successful
+
+    item = JSON.parse(response.body)
+
+    expect(item).to have_key('name')
+    expect(item).to have_key('description')
+    expect(item).to have_key('unit_price')
+    expect(item).to have_key('merchant_id')
+  end
 end
