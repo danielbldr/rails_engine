@@ -16,4 +16,6 @@ task import: :environment do
       end
     end
   end
+  Item.update_all('unit_price = unit_price/100.0')
+  InvoiceItem.update_all('unit_price = unit_price/100.0')
 end
