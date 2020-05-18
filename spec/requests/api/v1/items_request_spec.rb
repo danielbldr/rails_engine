@@ -57,12 +57,11 @@ describe "Items API" do
 
   it "can update an item" do
     merchant = create(:merchant)
-    id = create(:item, merchant_id: merchant.id).id
-    original_item = Item.last
+    original_item = create(:item, merchant_id: merchant.id)
     item_params = { name: "PSL" }
 
-    put "/api/v1/items/#{id}", params: { item: item_params }
-    item = Item.find_by(id: id)
+    put "/api/v1/items/#{original_item.id}", params: { item: item_params }
+    item = Item.find_by(id: original_item.id)
 
     expect(response).to be_successful
     expect(item.name).to_not eq(original_item.name)
@@ -70,5 +69,15 @@ describe "Items API" do
     expect(item.description).to eq(original_item.description)
     expect(item.unit_price).to eq(original_item.unit_price)
     expect(item.merchant_id).to eq(original_item.merchant_id)
+  end
+
+  it "can destroy an item" do
+    merchant = create(:merchant)
+    item = create(:item, merchant_id: merchant.id)
+
+    expect{ delete "/api/v1/items/#{item.id}" }.to change(Item, :count).by(-1)
+
+    expect(response).to be_success
+    expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
