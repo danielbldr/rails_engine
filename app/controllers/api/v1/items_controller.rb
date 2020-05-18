@@ -22,7 +22,7 @@ class Api::V1::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require('item').permit('name',
+    params.permit('name',
                                   'description',
                                   'unit_price',
                                   'merchant_id')
