@@ -1,7 +1,9 @@
 require 'csv'
 desc "Imports a CSV file into an ActiveRecord table"
 task import: :environment do
-  Rake::Task['db:schema:load'].invoke
+  Rake::Task['db:drop'].invoke
+  Rake::Task['db:create'].invoke
+  Rake::Task['db:migrate'].invoke
 
   files = Dir['db/data/*'].sort
   files.each do |file|
@@ -18,4 +20,5 @@ task import: :environment do
   end
   Item.update_all('unit_price = unit_price/100.0')
   InvoiceItem.update_all('unit_price = unit_price/100.0')
+  ActiveRecord::Base.connection.reset_pk_sequence!('items')
 end
