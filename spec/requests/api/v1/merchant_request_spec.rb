@@ -35,4 +35,15 @@ describe "Items API" do
     expect(response).to be_successful
     expect(merchant.name).to eq('Starbucks')
   end
+
+  it "can update an exisiting merchant" do
+    merchant = create(:merchant)
+
+    put "/api/v1/merchants/#{merchant.id}", params: { name: 'Boxcar Coffee'}
+
+    merchant = Merchant.last
+
+    expect(response).to be_successful
+    expect(merchant.name).to eq('Boxcar Coffee')
+  end
 end
