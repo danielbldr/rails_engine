@@ -46,4 +46,14 @@ describe "Items API" do
     expect(response).to be_successful
     expect(merchant.name).to eq('Boxcar Coffee')
   end
+
+  it "can delete a merchant" do
+    create_list(:merchant, 3)
+    merchant = Merchant.last
+
+    expect{ delete "/api/v1/merchants/#{merchant.id}" }.to change(Merchant, :count).by(-1)
+
+    expect(response).to be_successful
+    expect{Merchant.find(merchant.id)}.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
