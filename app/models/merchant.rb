@@ -2,7 +2,7 @@ class Merchant < ApplicationRecord
   validates :name, presence: true
 
   has_many :items, dependent: :destroy
-  has_many :invoices
+  has_many :invoices, dependent: :destroy
 
   def self.search(params)
     attribute = params.keys.first
