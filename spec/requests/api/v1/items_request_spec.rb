@@ -28,15 +28,16 @@ describe "Items API" do
 
     expect(response).to be_successful
 
-    item = JSON.parse(response.body)['data']
+    item = JSON.parse(response.body)
+    item_data = item['data']
 
     expect(item.count).to eq(1)
-    expect(item['attributes']).to have_key('name')
-    expect(item['attributes']).to have_key('description')
-    expect(item['attributes']).to have_key('unit_price')
-    expect(item['attributes']).to have_key('merchant_id')
-    expect(item['attributes']).to_not have_key('updated_at')
-    expect(item['attributes']).to_not have_key('created_at')
+    expect(item_data['attributes']).to have_key('name')
+    expect(item_data['attributes']).to have_key('description')
+    expect(item_data['attributes']).to have_key('unit_price')
+    expect(item_data['attributes']).to have_key('merchant_id')
+    expect(item_data['attributes']).to_not have_key('updated_at')
+    expect(item_data['attributes']).to_not have_key('created_at')
   end
 
   it "can create a new item" do
