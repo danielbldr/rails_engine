@@ -8,10 +8,10 @@ describe "Items API" do
 
     expect(response).to be_successful
 
-    items = JSON.parse(response.body)
+    merchants = JSON.parse(response.body)['data']
 
-    expect(items.count).to eq(3)
-    expect(items.first).to have_key('name')
+    expect(merchants.count).to eq(3)
+    expect(merchants.first['attributes']).to have_key('name')
   end
 
   it "returns data for specified merchant id" do
@@ -19,10 +19,20 @@ describe "Items API" do
 
     get "/api/v1/merchants/#{Merchant.last.id}"
 
+    merchant = JSON.parse(response.body)['data']
+
     expect(response).to be_successful
+    expect(merchant['attributes']).to have_key('name')
+  end
 
-    item = JSON.parse(response.body)
+  it "can create a new merchant" do
+    merchant_params = { name: 'Starbucks'}
 
-    expect(item).to have_key('name')
+    expect{ post "/api/v1/merchants", params: merchant_params }.to change(Merchant, :count).by(1)
+
+    merchant = Merchant.last
+
+    expect(response).to be_successful
+    expect(merchant.name).to eq('Starbucks')
   end
 end
