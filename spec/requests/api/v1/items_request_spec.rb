@@ -9,15 +9,15 @@ describe "Items API" do
 
     expect(response).to be_successful
 
-    items = JSON.parse(response.body)
+    items = JSON.parse(response.body)['data']
 
-    expect(items['data'].count).to eq(3)
-    expect(items['data'].first['attributes']).to have_key('name')
-    expect(items['data'].first['attributes']).to have_key('description')
-    expect(items['data'].first['attributes']).to have_key('unit_price')
-    expect(items['data'].first['attributes']).to have_key('merchant_id')
-    expect(items['data'].first['attributes']).to_not have_key('updated_at')
-    expect(items['data'].first['attributes']).to_not have_key('created_at')
+    expect(items.count).to eq(3)
+    expect(items.first['attributes']).to have_key('name')
+    expect(items.first['attributes']).to have_key('description')
+    expect(items.first['attributes']).to have_key('unit_price')
+    expect(items.first['attributes']).to have_key('merchant_id')
+    expect(items.first['attributes']).to_not have_key('updated_at')
+    expect(items.first['attributes']).to_not have_key('created_at')
   end
 
   it "returns data for a specified item" do
@@ -28,15 +28,15 @@ describe "Items API" do
 
     expect(response).to be_successful
 
-    item = JSON.parse(response.body)
+    item = JSON.parse(response.body)['data']
 
     expect(item.count).to eq(1)
-    expect(item['data']['attributes']).to have_key('name')
-    expect(item['data']['attributes']).to have_key('description')
-    expect(item['data']['attributes']).to have_key('unit_price')
-    expect(item['data']['attributes']).to have_key('merchant_id')
-    expect(item['data']['attributes']).to_not have_key('updated_at')
-    expect(item['data']['attributes']).to_not have_key('created_at')
+    expect(item['attributes']).to have_key('name')
+    expect(item['attributes']).to have_key('description')
+    expect(item['attributes']).to have_key('unit_price')
+    expect(item['attributes']).to have_key('merchant_id')
+    expect(item['attributes']).to_not have_key('updated_at')
+    expect(item['attributes']).to_not have_key('created_at')
   end
 
   it "can create a new item" do
