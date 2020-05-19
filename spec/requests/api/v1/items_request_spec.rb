@@ -95,4 +95,72 @@ describe "Items API" do
     expect(items_merchant.count).to eq(1)
     expect(items_merchant_data['attributes']['name']).to eq(merchant.name)
   end
+
+  it "can find an item by it's name" do
+    merchant = create(:merchant)
+    create_list(:item, 3, merchant_id: merchant.id)
+
+    get "/api/v1/items/find?name=#{Item.last.name[0..-3]}"
+
+    item = JSON.parse(response.body)
+    item_data = item['data']
+
+    expect(response).to be_success
+    expect(item.count).to eq(1)
+    expect(item_data['attributes']['name']).to eq(Item.last.name)
+    expect(item_data['attributes']['description']).to eq(Item.last.description)
+    expect(item_data['attributes']['unit_price']).to eq(Item.last.unit_price)
+    expect(item_data['attributes']['merchant_id']).to eq(Item.last.merchant_id)
+  end
+
+  it "can find an item by it's description" do
+    merchant = create(:merchant)
+    create_list(:item, 3, merchant_id: merchant.id)
+
+    get "/api/v1/items/find?description=#{Item.last.description}"
+
+    item = JSON.parse(response.body)
+    item_data = item['data']
+
+    expect(response).to be_success
+    expect(item.count).to eq(1)
+    expect(item_data['attributes']['name']).to eq(Item.last.name)
+    expect(item_data['attributes']['description']).to eq(Item.last.description)
+    expect(item_data['attributes']['unit_price']).to eq(Item.last.unit_price)
+    expect(item_data['attributes']['merchant_id']).to eq(Item.last.merchant_id)
+  end
+
+  it "can find an item by it's unit price" do
+    merchant = create(:merchant)
+    create_list(:item, 3, merchant_id: merchant.id)
+
+    get "/api/v1/items/find?unit_price=#{Item.last.unit_price}"
+
+    item = JSON.parse(response.body)
+    item_data = item['data']
+
+    expect(response).to be_success
+    expect(item.count).to eq(1)
+    expect(item_data['attributes']['name']).to eq(Item.last.name)
+    expect(item_data['attributes']['description']).to eq(Item.last.description)
+    expect(item_data['attributes']['unit_price']).to eq(Item.last.unit_price)
+    expect(item_data['attributes']['merchant_id']).to eq(Item.last.merchant_id)
+  end
+
+  it "can find an item by it's merchant_id" do
+    merchant = create(:merchant)
+    create_list(:item, 3, merchant_id: merchant.id)
+
+    get "/api/v1/items/find_all?merchant_id=#{Item.last.merchant_id}"
+
+    item = JSON.parse(response.body)
+    item_data = item['data']
+
+    expect(response).to be_success
+    expect(item_data.count).to eq(3)
+    expect(item_data.last['attributes']['name']).to eq(Item.last.name)
+    expect(item_data.last['attributes']['description']).to eq(Item.last.description)
+    expect(item_data.last['attributes']['unit_price']).to eq(Item.last.unit_price)
+    expect(item_data.last['attributes']['merchant_id']).to eq(Item.last.merchant_id)
+  end
 end
