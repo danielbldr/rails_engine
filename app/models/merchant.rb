@@ -5,13 +5,15 @@ class Merchant < ApplicationRecord
   has_many :invoices, dependent: :destroy
 
   def self.search(params)
-    attribute = params.keys.first
-    search_value = params.values.first
-    if %w[created_at updated_at].include?(attribute)
-      date = Date.parse(search_value)
-      Merchant.where("#{attribute}": date.midnight..date.end_of_day)
-    else
-      Merchant.where("#{attribute} ILIKE ?", "%#{search_value}%")
+    merchants = []
+    params.each do |key, value|
+      merchants += if %w[created_at updated_at].include?(key)
+                     date = Date.parse(value)
+                     Merchant.where("#{key}": date.midnight..date.end_of_day)
+                   else
+                     Merchant.where("#{key} ILIKE ?", "%#{value}%")
+                   end
     end
+    merchants.uniq
   end
 end
