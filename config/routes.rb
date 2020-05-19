@@ -7,7 +7,7 @@ Rails.application.routes.draw do
         end
         namespace :merchants do
           get '/find', to: 'search#show'
-          get '/find_all', to: 'search#show'
+          get '/find_all', to: 'search#index'
         end
       resources :items, except: %I[new, edit] do
         scope module: :items do
