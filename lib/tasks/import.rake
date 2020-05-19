@@ -21,4 +21,5 @@ task import: :environment do
   Item.update_all('unit_price = unit_price/100.0')
   InvoiceItem.update_all('unit_price = unit_price/100.0')
   ActiveRecord::Base.connection.reset_pk_sequence!('items')
+  ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
 end
