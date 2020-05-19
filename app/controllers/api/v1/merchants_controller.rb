@@ -21,6 +21,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   private
+
   def merchant_params
     params.permit('name')
   end
