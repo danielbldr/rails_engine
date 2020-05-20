@@ -39,14 +39,11 @@ class Merchant < ApplicationRecord
             .limit(limit)
   end
 
-  def self.all_merchant_revenue(dates)
+  def self.revenue(merchant_id)
     Merchant.joins(:invoice_items, :transactions)
             .where(transactions: { result: 'success' },
-                   invoices: { created_at: to_date(dates['start'])...
-                               to_date(dates['end']).end_of_day })
-            .select('sum(invoice_items.quantity * invoice_items.unit_price)
-                     AS revenue')
-            .order('revenue DESC')
+                   merchants: { id: merchant_id })
+            .sum('invoice_items.quantity * invoice_items.unit_price')
   end
 
   def self.to_date(date)
