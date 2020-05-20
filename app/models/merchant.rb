@@ -3,6 +3,8 @@ class Merchant < ApplicationRecord
 
   has_many :items, dependent: :destroy
   has_many :invoices, dependent: :destroy
+  has_many :invoice_items, through: :items
+  has_many :transactions, through: :invoices
 
   def self.search(params)
     merchants = []
@@ -15,5 +17,16 @@ class Merchant < ApplicationRecord
                    end
     end
     merchants.uniq
+  end
+
+  def self.highest_earning_merchants(limit)
+    Merchant.joins(:invoice_items, :transactions)
+            .where(transactions: { result: 'success' })
+            .select('merchants.*,
+                     sum(invoice_items.quantity * invoice_items.unit_price)
+                     as rev')
+            .group(:id)
+            .order('rev DESC')
+            .limit(limit)
   end
 end
