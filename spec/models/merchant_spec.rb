@@ -52,14 +52,5 @@ RSpec.describe Merchant do
       expect(merchants).to include(@merchant1)
       expect(merchants).to include(@merchant3)
     end
-
-    it 'will return total merchant revenue between two dates' do
-      dates = { 'start' => '2012-03-09', 'end' => '2012-03-24'}
-      rev = Merchant.all_merchant_revenue(dates)
-      rev_in_json = RevenueSerializer.new(rev.first).to_json
-      parsed_json = JSON.parse(rev_in_json)
-
-      expect(parsed_json['data']['attributes']['revenue']).to eq(60)
-    end
   end
 end
