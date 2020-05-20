@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         end
       end
       resources :merchants, except: %I[new edit] do
+        get '/revenue', to: 'revenue#show'
         scope module: :merchants do
           resources :items, only: [:index]
         end
