@@ -10,8 +10,8 @@ class Merchant < ApplicationRecord
     merchants = []
     params.each do |key, value|
       merchants += if %w[created_at updated_at].include?(key)
-                     date = Date.parse(value)
-                     Merchant.where("#{key}": date.midnight..date.end_of_day)
+                     Merchant.where("#{key}": to_date(value).midnight..
+                                              to_date(value).end_of_day)
                    else
                      Merchant.where("#{key} ILIKE ?", "%#{value}%")
                    end
@@ -37,5 +37,19 @@ class Merchant < ApplicationRecord
             .group(:id)
             .order('item_count DESC')
             .limit(limit)
+  end
+
+  def self.all_merchant_revenue(dates)
+    Merchant.joins(:invoice_items, :transactions)
+            .where(transactions: { result: 'success' },
+                   invoices: { created_at: to_date(dates['start'])...
+                               to_date(dates['end']).end_of_day })
+            .select('sum(invoice_items.quantity * invoice_items.unit_price)
+                     AS revenue')
+            .order('revenue DESC')
+  end
+
+  def self.to_date(date)
+    Date.parse(date)
   end
 end
