@@ -59,4 +59,13 @@ describe "Business Intelligence Endpoints" do
     expect(response).to be_success
     expect(revenue['data']['attributes']['revenue']).to eq(60)
   end
+
+  it 'can return total revenue for a single merchant' do
+    get "/api/v1/merchants/#{@merchant1.id}/revenue"
+
+    revenue = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(revenue['data']['attributes']['revenue']).to eq(50)
+  end
 end
