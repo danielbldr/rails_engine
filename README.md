@@ -2,7 +2,7 @@
 
 ### About the Project
 
-Solo project building a test driven API based on an e-commerce database. The application contains business logic and advanced database calls. Controllers are RESTful and adhere to the single responsibility principle.
+Solo project building a test driven API based on an e-commerce database. The application contains business logic and advanced database calls. Controllers are RESTful and adhere to the single responsibility principle. You can interact with this API through the front end, [Rails Driver](https://github.com/danielbldr/rails_driver)
 
 ## Local Setup
 
