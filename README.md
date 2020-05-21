@@ -40,6 +40,6 @@ $ bundle exec rspec
 `Ruby 2.5.3`
 
 ## Schema
-![https://user-images.githubusercontent.com/50503353/82521068-e6948180-9ae2-11ea-8b00-3991f197942c.png]
+[https://user-images.githubusercontent.com/50503353/82521068-e6948180-9ae2-11ea-8b00-3991f197942c.png]
 
 
