@@ -35,22 +35,11 @@ $ bundle exec rspec
 ##### Fast JSON API
 ##### PostgreSQL
 
-Things you may want to cover:
 
-* Ruby version
+## Versions 
+`Ruby 2.5.3`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
+## Schema
+![https://gist.github.com/danielbldr/385d1977d511551cba0a30aa62a33fd8#gistcomment-3312331]
 
 
