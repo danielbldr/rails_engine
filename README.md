@@ -18,10 +18,9 @@ $ bundle install
 
 Set up the database
 ```
-$ rake db:create
-$ rake db:migrate
-$ rake db:seed
+$ bundle exec rake import
 ```
+This task will efficiently create, migrate, and seed the database with files in the `db/data` folder
 
 Run the test suite:
 ```ruby
